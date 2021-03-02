@@ -1,0 +1,27 @@
+{
+    "name": "hahadu/think-editor",
+    "description": "thinkphp 集成富文本编辑器服务端处理模块 ",
+    "type": "library",
+    "require": {
+        "php": ">=5.6",
+        "hahadu/image-factory": ">=1.0",
+        "hahadu/helper-function": ">=0.7.15"
+    },
+    "require-dev": {
+        "php": ">=5.6"
+
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "hahadu",
+            "email": "582167246@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hahadu\\ThinkEditor\\": "src/"
+        }
+    },
+        "minimum-stability": "dev"
+}
