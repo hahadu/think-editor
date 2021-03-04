@@ -14,6 +14,9 @@ trait UploadTrait
      */
     private function _PathUrl()
     {
+        if($this->config->offsetExists('pathUrl')){
+            $this->pathUrl = $this->config->offsetExists('pathUrl');
+        }
         $this->pathUrl = $this->fileSystem->getConfig()->get('url');
     }
 
@@ -104,6 +107,15 @@ trait UploadTrait
                 $this->fullName = add_water('.' . $this->fullName);
             }
         }
+    }
+    private function _setWater(){
+        $this->water = Collection::make($this->config['water']);
+        if(null!=$this->water['add_water_type'] && $this->fileType == 'image'){
+            $this->_addWater();
+        }
+    }
+    private function _fileCTime(){
+        $this->fileCTime = $this->file->getCTime();
     }
 
 }
