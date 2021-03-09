@@ -15,7 +15,7 @@ class WangEditor extends BaseUploader
      * @param $fileField
      * @return Json
      */
-    public function wangEditorUploader($fileField)
+    public function uploader($fileField)
     {
         parent::upload($fileField);
         $data = $this->_setDataArr();
@@ -28,22 +28,23 @@ class WangEditor extends BaseUploader
      * @param string $html 表单提交的文本内容
      * @return mixed
      */
-    public function wangEditorBase64Img($html){
+    public function base64Img($html)
+    {
         $ql = new QueryList();
         $html = $ql->html($html);
 
-        $html->find('img')->map(function($item){
+        $html->find('img')->map(function ($item) {
             $src = $item->attr('src');
             $alt = $item->attr('alt');
-            if(strstr($src,';base64,')){
+            if (strstr($src, ';base64,')) {
                 $this->_deBase64($src);
                 $img = $this->getFullName();
-                if($src==$alt){
+                if ($src == $alt) {
                     $alt = $this->getFileBaseName();
                 }
 
-                $item->attr('src',$img);
-                $item->attr('alt',$alt);
+                $item->attr('src', $img);
+                $item->attr('alt', $alt);
             }
             return $item;
         });
@@ -54,32 +55,69 @@ class WangEditor extends BaseUploader
     /*****
      * @param string $base64Data
      */
-    protected function _deBase64(string $base64Data):void
+    protected function _deBase64(string $base64Data): void
     {
         $dataArr = explode(';base64,', $base64Data);
         $base64Data = $dataArr[1];
         parent::upBase64($base64Data);
     }
 
-    private function _setDataArr(){
-        if(null!=$this->getFullName()){
+    /****
+     * @return array
+     */
+    private function _setDataArr(): array
+    {
+
+        if (null != $this->getError()) {
             $data = [
-                'errno' => 0,
-                'data' => [
-                    [
-                        'url' => $this->getFullName(),
-                        'alt' => $this->getFileBaseName(),
-                        'href' => '',
-                    ],
-                ],
+                'errno' => $this->getError()->getMessage(),
+                'data' => [[],],
             ];
-        }else{
+        } elseif (null != $this->getFullName()) {
+            if ($this->getFileType() == 'video') {
+                $data = $this->_setVideoData();
+            } else {
+                $data = $this->_setImgData();
+            }
+        } else {
             $data = [
                 'errno' => 1,
-                'data' => [ [], ],
+                'data' => [[],],
             ];
         }
         return $data;
+    }
+
+    /****
+     * @return array
+     */
+    private function _setVideoData(): array
+    {
+        return [
+            'errno' => 0,
+            'data' => [
+                'url' => $this->getFullName(),
+                'alt' => $this->getFileBaseName(),
+                'href' => '',
+            ],
+        ];
+    }
+
+    /****
+     * @return array
+     */
+    private function _setImgData(): array
+    {
+        return [
+            'errno' => 0,
+            'data' => [
+                [
+                    'url' => $this->getFullName(),
+                    'alt' => $this->getFileBaseName(),
+                    'href' => '',
+                ],
+            ],
+        ];
     }
 
 }

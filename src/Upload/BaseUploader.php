@@ -5,6 +5,7 @@ namespace Hahadu\ThinkEditor\Upload;
 
 use Hahadu\Helper\FilesHelper;
 use Hahadu\ThinkEditor\Traits\UploadTrait;
+use think\exception\ValidateException;
 use think\facade\Filesystem;
 use think\Collection;
 use think\file\UploadedFile;
@@ -36,6 +37,9 @@ class BaseUploader
     private $config = [
         'disk' => 'public',
         'putFile' => 'files',
+        'upValidate'=> [
+            'fileSize:10240000' //默认上传限制10M php.ini调整上传大小
+        ],
 
         'water' => [
             'add_water_type' => 1, //添加水印 0不添加水印，1添加文字水印，2添加图片水印
@@ -45,9 +49,14 @@ class BaseUploader
         ],
     ];
     /****
-     * @var string 文件保存目录
+     * @var array 上传验证规则
      */
-    private $putFilePath;
+    private $upValidate;
+
+    /*****
+     * @var numeric 文件上传大小限制
+     */
+    private $maxSize;
 
     /****
      * @var string 磁盘下级目录
@@ -104,6 +113,11 @@ class BaseUploader
      */
     private $fileCTime;
 
+    /*****
+     * @var ValidateException 错误信息
+     */
+    private $error;
+
     /**
      * 构造函数
      * @param array $config 配置项
@@ -118,6 +132,7 @@ class BaseUploader
         $this->config->offsetSet('water', config('water'));
         $this->disk = $this->config->offsetGet('disk');
         $this->base64Config = $this->config->offsetGet('base64');
+        $this->upValidate = $this->config->offsetGet('upValidate');
 
     }
 
@@ -130,6 +145,13 @@ class BaseUploader
     {
         if (null != $this->fileField) {
             $this->file = $this->request->file($this->fileField);
+
+            try {
+                validate(['file' => $this->upValidate])->check(['file' => $this->file]);
+            } catch (\Exception $e) {
+                $this->error = $e;
+            }
+
         }
         $this->_FileBaseName();
         $this->fileSystem = Filesystem::disk($this->disk);
@@ -212,6 +234,13 @@ class BaseUploader
     }
     public function getFileType(){
         return $this->fileType;
+    }
+    /****
+     * 错误信息
+     * @return ValidateException
+     */
+    public function getError(){
+        return $this->error;
     }
 
 
