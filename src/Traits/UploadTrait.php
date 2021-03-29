@@ -6,6 +6,8 @@ namespace Hahadu\ThinkEditor\Traits;
 
 use Hahadu\Helper\FilesHelper;
 use think\Collection;
+use think\facade\Config;
+use think\facade\Filesystem;
 
 trait UploadTrait
 {
@@ -69,10 +71,11 @@ trait UploadTrait
                 break;
         }
         $this->config->offsetSet('putFile', $filePut);
+        $uid = $this->config->offsetGet['user'];
         if ($this->config->offsetExists('putFilePath')) {
-            $this->putFilePath = $this->config->offsetGet('putFilePath');
+            $this->putFilePath = $uid.DIRECTORY_SEPARATOR.$this->config->offsetGet('putFilePath');
         } else {
-            $this->putFilePath = $this->config->offsetGet('putFile');
+            $this->putFilePath = $uid.DIRECTORY_SEPARATOR.$this->config->offsetGet('putFile');
         }
     }
 
@@ -83,7 +86,8 @@ trait UploadTrait
 
     private function _config()
     {
-        $this->config = Collection::make($this->config);
+        $this->config = Collection::make($this->config)->merge(Config::get('editor'));
+        //$this->config;
     }
 
     private function _FileMime()
@@ -116,6 +120,10 @@ trait UploadTrait
     }
     private function _fileCTime(){
         $this->fileCTime = $this->file->getCTime();
+    }
+
+    private function _fileSystem(){
+        $this->fileSystem = Filesystem::disk($this->disk);
     }
 
 }

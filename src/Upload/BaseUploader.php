@@ -37,6 +37,8 @@ class BaseUploader
     private $config = [
         'disk' => 'public',
         'putFile' => 'files',
+        'listSize'=>20, //每次列出文件最大数量
+    //    'user' => 'user', //设置用户访问目录
         'upValidate'=> [
             'fileSize:10240000' //默认上传限制10M php.ini调整上传大小
         ],
@@ -118,6 +120,7 @@ class BaseUploader
      */
     private $error;
 
+
     /**
      * 构造函数
      * @param array $config 配置项
@@ -133,6 +136,7 @@ class BaseUploader
         $this->disk = $this->config->offsetGet('disk');
         $this->base64Config = $this->config->offsetGet('base64');
         $this->upValidate = $this->config->offsetGet('upValidate');
+
 
     }
 
@@ -154,7 +158,7 @@ class BaseUploader
 
         }
         $this->_FileBaseName();
-        $this->fileSystem = Filesystem::disk($this->disk);
+        $this->_fileSystem();
         $this->_FileType();
         $this->_setPutFile();
 
@@ -189,6 +193,12 @@ class BaseUploader
         $this->_init();
     }
 
+    public function remote($fileField){
+        $file = FilesHelper::download_file($fileField,Filesystem::disk('local')->path('remote'));
+        $this->file = get_file_info($file);
+        $this->_init();
+    }
+
     /****
      * @return string
      */
@@ -207,6 +217,7 @@ class BaseUploader
         return $this->pathUrl;
     }
     public function getConfig(){
+
         return $this->config;
     }
 
@@ -241,6 +252,14 @@ class BaseUploader
      */
     public function getError(){
         return $this->error;
+    }
+
+    /****
+     * @return \think\filesystem\Driver
+     */
+    public function getFileSystem(){
+        $this->_fileSystem();
+        return $this->fileSystem;
     }
 
 
