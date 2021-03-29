@@ -1,8 +1,11 @@
 # think-editor
 thinkphp 集成富文本编辑器服务端处理模块
 
+####安装
+composer require hahadu/think-ueditor
 
 ##wangEditor编辑器上传服务端配置:
+
 ###引入文件:
 ```php
 use Hahadu\ThinkEditor\Client\WangEditor;
@@ -54,6 +57,7 @@ $content = request()->post('content');
 echo $wE->base64Img($content);
 ```
 ##百度UEditor编辑器上传服务端配置:
+
 ###引入文件:
 ```php
 use Hahadu\ThinkEditor\Client\UEditor;
