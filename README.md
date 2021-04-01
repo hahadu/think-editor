@@ -94,3 +94,5 @@ serverUrl : "{:url('ueditor')}",//路由地址
 > [hahadu/helper-function](https://github.com/hahadu/helper-function) 一些助手函数
 >
 >[hahadu/think-helper](https://github.com/hahadu/think-helper) 另外一些助手函数
+> 
+>   交流qq群 [(点击链接加入群聊【thinkphp6开发交流群】：839695142]https://jq.qq.com/?_wv=1027&k=FxgUKLhJ)
