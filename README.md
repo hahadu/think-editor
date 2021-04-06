@@ -78,7 +78,7 @@ serverUrl : "{:url('ueditor')}",//路由地址
 <script>
 </script>
 ```
-#### 配置：
+## 配置：
 
 在系统config配置文件夹中配置ueditor编辑器和水印文件
 >config
@@ -99,7 +99,7 @@ serverUrl : "{:url('ueditor')}",//路由地址
 > 
 >   交流qq群 [(点击链接加入群聊【thinkphp6开发交流群】：839695142]https://jq.qq.com/?_wv=1027&k=FxgUKLhJ)
 
-###其它项目
+### 其它项目
 >
 >[hahadu/im-admin-think](https://github.com/hahadu/im-admin-think) admin模块
 > 
