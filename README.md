@@ -95,4 +95,13 @@ serverUrl : "{:url('ueditor')}",//路由地址
 >
 >[hahadu/think-helper](https://github.com/hahadu/think-helper) 另外一些助手函数
 > 
+>[hahadu/wangEditor-editor-code](https://github.com/hahadu/wangEditor-editor-code) wangEditor源代码编辑插件
+> 
 >   交流qq群 [(点击链接加入群聊【thinkphp6开发交流群】：839695142]https://jq.qq.com/?_wv=1027&k=FxgUKLhJ)
+
+###其它项目
+>
+>[hahadu/im-admin-think](https://github.com/hahadu/im-admin-think) admin模块
+> 
+>[hahadu/im-blog-think](https://github.com/hahadu/im-blog-think) think-php博客/文章管理、发布模块
+> 

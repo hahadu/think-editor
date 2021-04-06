@@ -1,7 +1,17 @@
 <?php
 //editor配置文件
 return [
-    'disk'=>'public',
+    'disk'=>'public', //Filesystem::disk('')默认选项
+    'putFile' => 'files', //Filesystem::putFile('')默认选项
+    'listSize'=>20, //每次列出文件最大数量
+    //    'user' => session('user_id'), //设置用户目录，为每个用户设置不同上传文件夹
+    'upValidate'=> [
+        'fileSize:10240000' //默认上传限制10M 需要先在php.ini调整系统上传限制
+    ],
+
+    'base64' => [
+        'extName' => 'jpg', //base文件上传缓存后缀
+    ],
 
     'wangEditor'=>[
 

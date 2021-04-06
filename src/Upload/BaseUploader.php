@@ -9,6 +9,7 @@ use think\exception\ValidateException;
 use think\facade\Filesystem;
 use think\Collection;
 use think\file\UploadedFile;
+use think\facade\Config;
 
 class BaseUploader
 {
@@ -132,7 +133,7 @@ class BaseUploader
         if (null != $config) {
             $this->configure($config);
         }
-        $this->config->offsetSet('water', config('water'));
+        $this->config->offsetSet('water', Config::get('water'));
         $this->disk = $this->config->offsetGet('disk');
         $this->base64Config = $this->config->offsetGet('base64');
         $this->upValidate = $this->config->offsetGet('upValidate');

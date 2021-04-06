@@ -106,7 +106,7 @@ trait UploadTrait
      */
     protected function _addWater()
     {
-        if (null != config('water.add_water_type')) {
+        if (null != Config::get('water.add_water_type')) {
             if (!empty($this->fullName)) {
                 $this->fullName = add_water('.' . $this->fullName);
             }
