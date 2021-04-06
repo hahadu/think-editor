@@ -2,7 +2,7 @@
 thinkphp 集成富文本编辑器服务端处理模块
 
 #### 安装
-composer require hahadu/think-ueditor
+composer require hahadu/think-editor
 
 ## wangEditor编辑器上传服务端配置:
 
