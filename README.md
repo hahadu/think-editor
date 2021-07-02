@@ -86,7 +86,7 @@ serverUrl : "{:url('ueditor')}",//路由地址
 >>water.php //水印配置文件
 
 详情参考config目录下ueditor.php和water.php
-
+* 水印需要 php-imagick 支持：debian\ubuntu : sudo apt install php-imagick
 
 #### 鸣谢
 > [hahadu/image-factory](https://github.com/hahadu/image-factory) 提供的图像处理模块
